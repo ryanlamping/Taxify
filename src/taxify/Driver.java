@@ -21,10 +21,12 @@ public class Driver implements IDriver {
         this.vehicle = vehicle;
     }
 
-    // public void acceptService() {
-    //     // accept service, return true?
-    // }
+    @Override
+    public boolean acceptService(IService service) {
+        return true;      
+    }
 
+    @Override
     public boolean pinkService(Service service) {
         if ( this.gender == 'f' ) {
             if(service.getUser().getGender() =='f' ){
@@ -37,26 +39,32 @@ public class Driver implements IDriver {
         return false;
     }
 
+    @Override
     public String getName() {
         return this.name;
     }
 
+    @Override
     public char getGender() {
         return this.gender;
     }
 
+    @Override
     public LocalDate getBirthDate() {
         return this.birthDate;
     }
 
+    @Override    
     public int getYearsOfService() {
         return this.experience;
     }
 
+    @Override
     public double getOverallRating() {
         return this.rating;
     }
     
+    @Override
     public IVehicle getVehicle() {
         return this.vehicle;
     }

@@ -5,12 +5,16 @@ public class Service implements IService {
     private ILocation pickup;
     private ILocation dropoff;
     private int stars;
+    private boolean silent;
+    private boolean pink;
     
-    public Service(IUser user, ILocation pickup, ILocation dropoff) {
+    public Service(IUser user, ILocation pickup, ILocation dropoff, boolean silent, boolean pink) {
         this.user = user;
         this.pickup = pickup;
         this.dropoff = dropoff; 
         this.stars = 0;
+        this.silent = silent;
+        this.pink = pink;
     }
     
     @Override
@@ -26,6 +30,16 @@ public class Service implements IService {
     @Override
     public ILocation getDropoffLocation() {
         return this.dropoff;
+    }
+
+    @Override
+    public boolean getSilent() {
+        return this.silent;
+    }
+
+    @Override
+    public boolean getPink() {
+        return this.pink;
     }
     
     @Override

@@ -9,7 +9,8 @@ public abstract class Vehicle implements IVehicle {
     private ILocation destination;
     private IStatistics statistics;
     private IRoute route;
-	private boolean silent;
+	private boolean silent;	// do i include as attribute of vehicle or do I just get it from service?
+	private IDriver driver;
 	    
     public Vehicle(int id, ILocation location) {    	
     	this.id = id;
@@ -45,6 +46,16 @@ public abstract class Vehicle implements IVehicle {
     public IStatistics getStatistics() {
     	return this.statistics;
     }
+
+	@Override 
+	public IDriver getDriver() {
+		return this.driver;
+	}
+	
+	@Override
+	public void setDriver(IDriver driver) {
+		this.driver = driver;
+	}
     
 	@Override
 	public void setCompany(ITaxiCompany company) {
@@ -111,8 +122,16 @@ public abstract class Vehicle implements IVehicle {
  	}
 	    
 	@Override
-    public boolean isFree() {
-        return (this.status == VehicleStatus.FREE);
+    public boolean isFree(boolean pink) {
+		if(pink == true && this.driver.getGender() == 'f') {
+			return (this.status == VehicleStatus.FREE);
+		}
+		else if (pink == false) {
+			return (this.status == VehicleStatus.FREE);
+		}
+		else {
+			return false;
+		}
     }   
     
 	@Override

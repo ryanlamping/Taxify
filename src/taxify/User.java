@@ -61,8 +61,11 @@ public class User implements IUser {
     }
     
     @Override
-    public void requestService(boolean silent) {
-        this.company.provideService(this.id, silent);
+    public void requestService(boolean silent, boolean pink) {
+        if(this.getGender() == 'm') {
+            pink = false;
+        }
+        this.company.provideService(this.id, silent, pink);
     }
     
     @Override

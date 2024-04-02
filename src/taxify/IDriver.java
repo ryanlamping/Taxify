@@ -9,4 +9,6 @@ public interface IDriver {
     public LocalDate getBirthDate();
     public int getYearsOfService();
     public double getOverallRating();
+    public IVehicle getVehicle();
+    public boolean acceptService(IService service);
 }

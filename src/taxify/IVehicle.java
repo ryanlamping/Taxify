@@ -8,13 +8,15 @@ public interface IVehicle extends IMovable {
     public IService getService();
     public IStatistics getStatistics();
     public boolean getSilent();
+    public IDriver getDriver();
+    public void setDriver(IDriver driver);
     public void setCompany(ITaxiCompany company);
     public void pickService(IService service, boolean silent);
     public void startService();
     public void endService();
     public void notifyArrivalAtPickupLocation();
     public void notifyArrivalAtDropoffLocation();
-    public boolean isFree();
+    public boolean isFree(boolean pink);
     public int calculateCost();
     public String toString();
     

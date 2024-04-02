@@ -35,9 +35,9 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
     }
         
     @Override
-    public boolean provideService(int user, boolean silent) {
+    public boolean provideService(int user, boolean silent, boolean pink) {
         int userIndex = findUserIndex(user);        
-        int vehicleIndex = findFreeVehicle();
+        int vehicleIndex = findFreeVehicle(pink);
         
         // if there is a free vehicle, assign a random pickup and drop-off location to the new service
         // the distance between the pickup and the drop-off location should be at least 3 blocks
@@ -58,12 +58,18 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
             
             // create a service with the user, the pickup and the drop-off location
 
-            IService service = new Service(this.users.get(userIndex), origin, destination);
+            IService service = new Service(this.users.get(userIndex), origin, destination, silent, pink);
             
-            // assign the new service to the vehicle
+            // assign the new service to the vehicle. no need to pass pink because only vehicles that would be available have female drivers
             
-            this.vehicles.get(vehicleIndex).pickService(service, silent);            
-             
+            //this.vehicles.get(vehicleIndex).pickService(service, silent);            
+            if(this.vehicles.get(vehicleIndex).getDriver().acceptService(service)) {
+                this.vehicles.get(vehicleIndex).pickService(service, silent);
+            };
+            // else find a new vehicle
+
+                        
+
             notifyObserver("User " + this.users.get(userIndex).getId() + " requests a service from " + service.toString() + ", the ride is assigned to " +
                            this.vehicles.get(vehicleIndex).getClass().getSimpleName() + " " + this.vehicles.get(vehicleIndex).getId() + " at location " +
                            this.vehicles.get(vehicleIndex).getLocation().toString());
@@ -114,14 +120,14 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         this.observer.updateObserver(message);
     }
     
-    private int findFreeVehicle() {
+    private int findFreeVehicle(boolean pink) {
         int index;
         
         do {
             
             index = ApplicationLibrary.rand(this.vehicles.size());
             
-        } while (!this.vehicles.get(index).isFree());
+        } while (!this.vehicles.get(index).isFree(pink));
 
         return index;
     }

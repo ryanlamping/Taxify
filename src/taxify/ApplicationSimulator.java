@@ -59,7 +59,7 @@ public class ApplicationSimulator implements IApplicationSimulator, IObserver {
     }
 
     @Override
-    public void requestService() {        
+    public void requestService(boolean silent, boolean pink) {        
         // find an available user and requests a service to the Taxi Company
 
         int index;
@@ -70,7 +70,7 @@ public class ApplicationSimulator implements IApplicationSimulator, IObserver {
             
         } while (this.users.get(index).getService());
         
-        this.company.provideService(this.users.get(index).getId());
+        this.company.provideService(this.users.get(index).getId(), silent, pink);
     }
     
     @Override
