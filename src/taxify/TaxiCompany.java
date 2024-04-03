@@ -63,7 +63,7 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
             // assign the new service to the vehicle. no need to pass pink because only vehicles that would be available have female drivers
             
             //this.vehicles.get(vehicleIndex).pickService(service, silent);            
-            // this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
+            this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
             this.vehicles.get(vehicleIndex).pickService(service, silent, pink);
             // else find a new vehicle
 
