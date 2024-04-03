@@ -42,7 +42,7 @@ public class TestProgram {
         IUser user9 = new User(10, "Isabell", "Etzel", 'f', LocalDate.of(1990, 8, 20));
         users.add(user9);
 
-        IUser user10 = new User(111, "Nate", "Erk", 'm', LocalDate.of(1970, 8, 20));
+        IUser user10 = new User(11, "Nate", "Erk", 'm', LocalDate.of(1970, 8, 20));
         users.add(user10);
 
 
@@ -55,10 +55,13 @@ public class TestProgram {
         }
 
         for (int i = 0; i < 10; i++) {
-            IVehicle assignedVehicle = vehicles.get(i); // Assign every alternate vehicle to a driver
-            IDriver driver;
+            IVehicle assignedVehicle = vehicles.get(i);
             String driverName = "Driver" + i + "X";
-            driver = new Driver(driverName, 'm', LocalDate.of(1980, 9, 20), 3, 4.2, assignedVehicle);
+            char gender = 'f';
+            if(i % 2 == 1) {
+                gender = 'm';
+            }
+            IDriver driver = new Driver(driverName, gender, LocalDate.of(1980, 9, 20), 3, 4.2, assignedVehicle);
             drivers.add(driver);
             assignedVehicle.setDriver(driver);
         }
@@ -74,6 +77,7 @@ public class TestProgram {
             int rand = ApplicationLibrary.rand();
             if (rand % 2 == 1) {
                 silent = false;
+                pink = true;
             }
             simulator.requestService(silent, pink);
             // taxiCompany.provideService(user.getId());
@@ -86,16 +90,16 @@ public class TestProgram {
         }
          while (taxiCompany.getTotalServices() != 0);
 
-
         // Display statistics
         System.out.println("Statistics:");
         for (IVehicle vehicle : vehicles) {
             String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
-            String stats = String.format("%s %2d driven by %s, Silent: %b %2d services %3d km. %4d eur. %2d reviews %.2f stars",
+            String stats = String.format("%s %2d driven by %s, Silent: %b Pink: %b %2d services %3d km. %4d eur. %2d reviews %.2f stars",
                     vehicleType,
                     vehicle.getId(),
                     vehicle.getDriver().getName(),
                     vehicle.getSilent(),
+                    vehicle.getPink(),
                     vehicle.getStatistics().getServices(),
                     vehicle.getStatistics().getDistance(),
                     vehicle.getStatistics().getBilling(),

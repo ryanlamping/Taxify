@@ -8,10 +8,11 @@ public interface IVehicle extends IMovable {
     public IService getService();
     public IStatistics getStatistics();
     public boolean getSilent();
+    public boolean getPink();
     public IDriver getDriver();
     public void setDriver(IDriver driver);
     public void setCompany(ITaxiCompany company);
-    public void pickService(IService service, boolean silent);
+    public void pickService(IService service, boolean silent, boolean pink);
     public void startService();
     public void endService();
     public void notifyArrivalAtPickupLocation();

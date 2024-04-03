@@ -10,6 +10,7 @@ public abstract class Vehicle implements IVehicle {
     private IStatistics statistics;
     private IRoute route;
 	private boolean silent;	// do i include as attribute of vehicle or do I just get it from service?
+	private boolean pink; // again do we include or not?
 	private IDriver driver;
 	    
     public Vehicle(int id, ILocation location) {    	
@@ -63,9 +64,9 @@ public abstract class Vehicle implements IVehicle {
 	}
 	
 	@Override
-    public void pickService(IService service, boolean silent) {
+    public void pickService(IService service, boolean silent, boolean pink) {
 		// pick a service, set destination to the service pickup location, and status to "pickup"
-		
+		this.pink = pink;
     	this.service = service;
 		this.silent = silent;
     	this.destination = service.getPickupLocation();
@@ -76,6 +77,11 @@ public abstract class Vehicle implements IVehicle {
 	@Override
 	public boolean getSilent() {
 		return this.silent;
+	}
+
+	@Override
+	public boolean getPink() {
+		return this.pink;
 	}
 
 	@Override
