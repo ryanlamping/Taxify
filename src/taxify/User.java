@@ -65,6 +65,9 @@ public class User implements IUser {
         if(this.getGender() == 'm') {
             pink = false;
         }
+        // call function to see if a service is nearby
+            // if yes --> allow option to do shared service
+            // if no --> pass to single service
         this.company.provideService(this.id, silent, pink);
     }
     

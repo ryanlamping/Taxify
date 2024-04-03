@@ -69,7 +69,7 @@ public abstract class Vehicle implements IVehicle {
 		this.pink = pink;
     	this.service = service;
 		this.silent = silent;
-    	this.destination = service.getPickupLocation();
+    	this.destination = service.getPickupLocation(); 
     	this.route = new Route(this.location, this.destination);    	
     	this.status = VehicleStatus.PICKUP;
     }

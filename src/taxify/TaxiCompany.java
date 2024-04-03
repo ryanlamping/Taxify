@@ -36,7 +36,11 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         
     @Override
     public boolean provideService(int user, boolean silent, boolean pink) {
-        int userIndex = findUserIndex(user);        
+        int userIndex = findUserIndex(user); 
+        // in here we would check if there is a vehicle in service close to the pick up location
+            // user.acceptRideShare() && passenger.acceptRideShare();
+            // if yes --> notify passenger of discount if ride share, notify user of potential shared ride
+            // if no --> continue to findFreeVehicle(pink)     
         int vehicleIndex = findFreeVehicle(pink);
         
         // if there is a free vehicle, assign a random pickup and drop-off location to the new service
@@ -64,7 +68,7 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
             
             //this.vehicles.get(vehicleIndex).pickService(service, silent);            
             this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
-            this.vehicles.get(vehicleIndex).pickService(service, silent, pink);
+            this.vehicles.get(vehicleIndex).pickService(service, silent, pink); 
             // else find a new vehicle
 
                         
@@ -139,4 +143,13 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         
         return -1;
     }
+
+    // private boolean acceptRideShare() {
+    //     if (ApplicationLibrary.rand() % 2 == 0) {
+    //         return true;
+    //     }
+    //     else {
+    //         return false;
+    //     }
+    // }
 }
