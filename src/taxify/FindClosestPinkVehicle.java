@@ -8,7 +8,7 @@ public class FindClosestPinkVehicle implements IFindVehicle {
         int distance =  Integer.MAX_VALUE;
         int index = -1;
         for (int vehicle=0; vehicle<=vehicles.size()-1; vehicle++) {
-            if(vehicles.get(vehicle).getStatus() == VehicleStatus.FREE && (ApplicationLibrary.distance(vehicles.get(vehicle).getLocation(), origin) < distance) && vehicles.get(vehicle).getService().getPink()){
+            if(vehicles.get(vehicle).getStatus() == VehicleStatus.FREE && (ApplicationLibrary.distance(vehicles.get(vehicle).getLocation(), origin) < distance) && vehicles.get(vehicle).getDriver().getGender() == 'f'){
                 distance = ApplicationLibrary.distance(vehicles.get(vehicle).getLocation(), origin);
                 index = vehicle;
             }

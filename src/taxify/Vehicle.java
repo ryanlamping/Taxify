@@ -28,6 +28,11 @@ public abstract class Vehicle implements IVehicle {
     public int getId() {
     	return this.id;
     }
+
+	@Override
+	public void setPink(boolean pink) {
+		this.pink = pink;
+	}
  
 	@Override
     public ILocation getLocation() {
@@ -56,7 +61,10 @@ public abstract class Vehicle implements IVehicle {
 	public IDriver getDriver() {
 		return this.driver;
 	}
-	
+	@Override
+	public void setShare(boolean share) {
+		this.share = share;
+	}
 	@Override
 	public void setDriver(IDriver driver) {
 		this.driver = driver;

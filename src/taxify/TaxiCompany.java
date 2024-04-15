@@ -81,7 +81,7 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         // if there is a free vehicle, assign a random pickup and drop-off location to the new service
         System.out.println("vehicle index: " + vehicleIndex);
         if (vehicleIndex != -1) {
-            System.out.println("made it");            
+            System.out.println("made it");
             ILocation destination = ApplicationLibrary.randomLocation(origin);
             
             // update the user status
@@ -90,6 +90,7 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
 
             if (share == true) {
                 IService service = this.vehicles.get(vehicleIndex).getService();
+                this.vehicles.get(vehicleIndex).setShare(share);
                 this.totalServices--;
                 service.setPickupLocation(origin);
                 service.setDropOffLocation(destination);
@@ -111,6 +112,10 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
                 return true;
             }
             else {
+
+                if ( pink ) {
+                    this.vehicles.get(vehicleIndex).setPink(pink);
+                }
                 // create a service with the user, the pickup and the drop-off location
 
                 IService service = new Service(this.users.get(userIndex), origin, destination, silent, pink, share);

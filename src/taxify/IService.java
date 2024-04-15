@@ -10,6 +10,7 @@ public interface IService {
     public int getStars();
     public void setPickupLocation(ILocation origin);
     public void setDropOffLocation(ILocation destination);
+    public boolean getShare();
     public void setShare(boolean share);
     public void setStars(int stars);
     public int calculateDistance();

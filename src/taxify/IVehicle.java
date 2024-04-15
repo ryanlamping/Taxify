@@ -12,6 +12,7 @@ public interface IVehicle extends IMovable {
     public boolean getShare();
     public IDriver getDriver();
     public VehicleStatus getStatus();
+    public void setShare(boolean share);
     public void setDriver(IDriver driver);
     public void setCompany(ITaxiCompany company);
     public void pickService(IService service, boolean silent, boolean pink);
@@ -23,5 +24,6 @@ public interface IVehicle extends IMovable {
     public boolean isService(boolean pink);
     public int calculateCost();
     public String toString();
+    public void setPink(boolean pink);
     
 }

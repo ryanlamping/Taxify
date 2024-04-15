@@ -49,6 +49,11 @@ public class Service implements IService {
     }
 
     @Override
+    public boolean getShare() {
+        return this.share;
+    }
+
+    @Override
     public boolean getSilent() {
         return this.silent;
     }
