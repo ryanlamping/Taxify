@@ -79,15 +79,18 @@ public class TestProgram {
         boolean share = false;
 
         // requesting 5 services with random chance of pink or share
-        for (int i=0; i<=5; i++) {
+        for (int i=0; i<=10; i++) {
             int rand = ApplicationLibrary.rand();
             if (rand % 2 == 0 && i!=0) {
-                silent = false;
-                pink = false;
                 share = true;
+                silent = true;
             }
             else if ( i == 5) {
                 share = true;
+            }
+            else if (rand % 3 == 0 && rand % 2 == 0) {
+                pink = true;
+                silent = true;
             }
             simulator.requestService(silent, pink, share);
             // taxiCompany.provideService(user.getId());
