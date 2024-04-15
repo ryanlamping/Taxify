@@ -6,6 +6,7 @@ public class ApplicationLibrary {
     public static final int MINIMUM_DISTANCE = 3;
     private static final int MAP_WIDTH = 10;
     private static final int MAP_HEIGHT = 10;    
+    public static final int INFINITY = 100000000;
 
     public static int rand() {
         Random random = new Random();

@@ -9,7 +9,9 @@ public interface IVehicle extends IMovable {
     public IStatistics getStatistics();
     public boolean getSilent();
     public boolean getPink();
+    public boolean getShare();
     public IDriver getDriver();
+    public VehicleStatus getStatus();
     public void setDriver(IDriver driver);
     public void setCompany(ITaxiCompany company);
     public void pickService(IService service, boolean silent, boolean pink);
@@ -18,6 +20,7 @@ public interface IVehicle extends IMovable {
     public void notifyArrivalAtPickupLocation();
     public void notifyArrivalAtDropoffLocation();
     public boolean isFree(boolean pink);
+    public boolean isService(boolean pink);
     public int calculateCost();
     public String toString();
     

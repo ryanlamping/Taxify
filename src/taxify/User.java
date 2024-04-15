@@ -61,14 +61,14 @@ public class User implements IUser {
     }
     
     @Override
-    public void requestService(boolean silent, boolean pink) {
+    public void requestService(boolean silent, boolean pink, boolean share) {
         if(this.getGender() == 'm') {
             pink = false;
         }
         // call function to see if a service is nearby
             // if yes --> allow option to do shared service
             // if no --> pass to single service
-        this.company.provideService(this.id, silent, pink);
+        this.company.provideService(this.id, silent, pink, share);
     }
     
     @Override
@@ -77,6 +77,15 @@ public class User implements IUser {
         
         if (ApplicationLibrary.rand() % 2 == 0) {
             service.setStars(ApplicationLibrary.rand(5) + 1);
+        }
+    }
+
+    public boolean acceptRideShare() {
+        if( ApplicationLibrary.rand() % 2 == 0) {
+            return true;
+        }
+        else {
+            return false;
         }
     }
     
