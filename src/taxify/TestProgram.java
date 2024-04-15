@@ -94,7 +94,7 @@ public class TestProgram {
         System.out.println("Statistics:");
         for (IVehicle vehicle : vehicles) {
             String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
-            String stats = String.format("%s %2d driven by %s, Silent: %b Pink: %b %2d services %3d km. %4d eur. %2d reviews %.2f stars",
+            String stats = String.format("%s %2d driven by  %s, Silent: %b Pink: %b %2d services %3d km. %4d eur. %2d reviews %.2f stars",
                     vehicleType,
                     vehicle.getId(),
                     vehicle.getDriver().getName(),
