@@ -87,28 +87,52 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
             // update the user status
                        
             this.users.get(userIndex).setService(true);
-            
-            // create a service with the user, the pickup and the drop-off location
 
-            IService service = new Service(this.users.get(userIndex), origin, destination, silent, pink);
-            
-            // assign the new service to the vehicle. no need to pass pink because only vehicles that would be available have female drivers
-            
-            // formality: make sure driver accepts ride (hard coded to true)
-            this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
+            if (share == true) {
+                IService service = this.vehicles.get(vehicleIndex).getService();
+                this.totalServices--;
+                service.setPickupLocation(origin);
+                service.setDropOffLocation(destination);
 
-            // call function to pick up user
-            this.vehicles.get(vehicleIndex).pickService(service, silent, pink); 
+                service.setShare(share);
+                // formality: make sure driver accepts ride (hard coded to true)
+                this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
+                // call function to pick up user
+                this.vehicles.get(vehicleIndex).pickService(service, silent, pink);
 
-            notifyObserver("User " + this.users.get(userIndex).getId() + " requests a service from " + service.toString() + ", the ride is assigned to " +
-                           this.vehicles.get(vehicleIndex).getClass().getSimpleName() + " " + this.vehicles.get(vehicleIndex).getId() + " at location " +
-                           this.vehicles.get(vehicleIndex).getLocation().toString());
-            
-            // update the counter of services
-            
-            this.totalServices++;
-            
-            return true;
+                notifyObserver("User " + this.users.get(userIndex).getId() + " requests a service from " + service.toString() + ", the ride is assigned to " +
+                this.vehicles.get(vehicleIndex).getClass().getSimpleName() + " " + this.vehicles.get(vehicleIndex).getId() + " at location " +
+                this.vehicles.get(vehicleIndex).getLocation().toString());
+ 
+                // update the counter of services
+                
+                this.totalServices++;
+                
+                return true;
+            }
+            else {
+                // create a service with the user, the pickup and the drop-off location
+
+                IService service = new Service(this.users.get(userIndex), origin, destination, silent, pink, share);
+                
+                // assign the new service to the vehicle. no need to pass pink because only vehicles that would be available have female drivers
+                
+                // formality: make sure driver accepts ride (hard coded to true)
+                this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
+
+                // call function to pick up user
+                this.vehicles.get(vehicleIndex).pickService(service, silent, pink);
+
+                notifyObserver("User " + this.users.get(userIndex).getId() + " requests a service from " + service.toString() + ", the ride is assigned to " +
+                this.vehicles.get(vehicleIndex).getClass().getSimpleName() + " " + this.vehicles.get(vehicleIndex).getId() + " at location " +
+                this.vehicles.get(vehicleIndex).getLocation().toString());
+ 
+                // update the counter of services
+                
+                this.totalServices++;
+                
+                return true;
+            } 
         }
         
         return false;

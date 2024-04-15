@@ -94,29 +94,29 @@ public class TestProgram {
         }
 
 
-    //     do {
-    //         simulator.show();
-    //         simulator.update();
-    //     }
-    //      while (taxiCompany.getTotalServices() != 0);
+        do {
+            simulator.show();
+            simulator.update();
+        }
+         while (taxiCompany.getTotalServices() != 0);
 
-    //     // Display statistics
-    //     System.out.println("Statistics:");
-    //     for (IVehicle vehicle : vehicles) {
-    //         String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
-    //         String stats = String.format("%s %2d driven by %s, Silent: %b Pink: %b, Share: %b, %2d services %3d km. %4d eur. %2d reviews %.2f stars",
-    //                 vehicleType,
-    //                 vehicle.getId(),
-    //                 vehicle.getDriver().getName(),
-    //                 vehicle.getSilent(),
-    //                 vehicle.getPink(),
-    //                 vehicle.getShare(),
-    //                 vehicle.getStatistics().getServices(),
-    //                 vehicle.getStatistics().getDistance(),
-    //                 vehicle.getStatistics().getBilling(),
-    //                 vehicle.getStatistics().getReviews(),
-    //                 vehicle.getStatistics().getStars());
-    //         System.out.println(stats);
-    //     }
+        // Display statistics
+        System.out.println("Statistics:");
+        for (IVehicle vehicle : vehicles) {
+            String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
+            String stats = String.format("%s %2d driven by %s, Silent: %b Pink: %b, Share: %b, %2d services %3d km. %4d eur. %2d reviews %.2f stars",
+                    vehicleType,
+                    vehicle.getId(),
+                    vehicle.getDriver().getName(),
+                    vehicle.getSilent(),
+                    vehicle.getPink(),
+                    vehicle.getShare(),
+                    vehicle.getStatistics().getServices(),
+                    vehicle.getStatistics().getDistance(),
+                    vehicle.getStatistics().getBilling(),
+                    vehicle.getStatistics().getReviews(),
+                    vehicle.getStatistics().getStars());
+            System.out.println(stats);
+        }
     }
 }
