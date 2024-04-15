@@ -7,14 +7,30 @@ public class Service implements IService {
     private int stars;
     private boolean silent;
     private boolean pink;
+    private boolean share;
     
-    public Service(IUser user, ILocation pickup, ILocation dropoff, boolean silent, boolean pink) {
+    public Service(IUser user, ILocation pickup, ILocation dropoff, boolean silent, boolean pink, boolean share) {
         this.user = user;
         this.pickup = pickup;
         this.dropoff = dropoff; 
         this.stars = 0;
         this.silent = silent;
         this.pink = pink;
+        this.share = share;
+    }
+
+    @Override
+    public void setPickupLocation(ILocation origin) {
+        this.pickup = origin;
+    }
+
+    @Override
+    public void setDropOffLocation(ILocation destination) {
+        this.dropoff = destination;
+    }
+    @Override 
+    public void setShare(boolean share) {
+        this.share = share;
     }
     
     @Override
