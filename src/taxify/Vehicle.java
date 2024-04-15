@@ -11,6 +11,7 @@ public abstract class Vehicle implements IVehicle {
     private IRoute route;
 	private boolean silent;	// do i include as attribute of vehicle or do I just get it from service?
 	private boolean pink; // again do we include or not?
+	private boolean share;
 	private IDriver driver;
 	    
     public Vehicle(int id, ILocation location) {    	
@@ -42,6 +43,9 @@ public abstract class Vehicle implements IVehicle {
     public IService getService() {
     	return this.service;
     }
+	public VehicleStatus getStatus() {
+		return this.status;
+	}
     
 	@Override
     public IStatistics getStatistics() {
@@ -66,6 +70,7 @@ public abstract class Vehicle implements IVehicle {
 	@Override
     public void pickService(IService service, boolean silent, boolean pink) {
 		// pick a service, set destination to the service pickup location, and status to "pickup"
+		System.out.println("made it to pick service");
 		this.pink = pink;
     	this.service = service;
 		this.silent = silent;
@@ -82,6 +87,11 @@ public abstract class Vehicle implements IVehicle {
 	@Override
 	public boolean getPink() {
 		return this.pink;
+	}
+
+	@Override
+	public boolean getShare() {
+		return this.share;
 	}
 
 	@Override
@@ -139,6 +149,23 @@ public abstract class Vehicle implements IVehicle {
 			return false;
 		}
     }   
+
+	@Override
+	public boolean isService(boolean pink) {
+		if(pink == true && this.driver.getGender() == 'f') {
+			return (this.status == VehicleStatus.SERVICE);
+		}
+		else if (pink == false) {
+			return (this.status == VehicleStatus.SERVICE);
+		}
+		else {
+			System.out.println("Vehicle not in service");
+			// find a free vehicle if not
+			return isFree(pink);
+		}
+	}
+
+	// function to see if there is a vehicle close to where user makes request
     
 	@Override
     public void move() {

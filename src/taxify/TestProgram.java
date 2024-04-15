@@ -12,6 +12,7 @@ public class TestProgram {
         List<IVehicle> vehicles = new ArrayList<>();
 
         // Creating users
+
         IUser user = new User(1, "Jack", "Endo", 'm', LocalDate.of(2000, 8, 20));
         users.add(user);
 
@@ -46,15 +47,16 @@ public class TestProgram {
         users.add(user10);
 
 
-
-        for (int i = 0; i < 5; i++) {
+        // creating vehicles
+        for (int i = 0; i < 10; i++) {
             IVehicle taxi = new Taxi(i + 1, ApplicationLibrary.randomLocation());
             IVehicle shuttle = new Shuttle(i + 1, ApplicationLibrary.randomLocation());
             vehicles.add(taxi);
             vehicles.add(shuttle);
         }
 
-        for (int i = 0; i < 10; i++) {
+        // creating drivers, assigning driver to vehicle
+        for (int i = 0; i < 20; i++) {
             IVehicle assignedVehicle = vehicles.get(i);
             String driverName = "Driver" + i + "X";
             char gender = 'f';
@@ -66,46 +68,55 @@ public class TestProgram {
             assignedVehicle.setDriver(driver);
         }
 
+        // creating taxi company
         ITaxiCompany taxiCompany = new TaxiCompany("Taxifista", users, vehicles);
         ApplicationSimulator simulator = new ApplicationSimulator(taxiCompany, users, vehicles);
         taxiCompany.addObserver(simulator);
 
         // Requesting services for users
-        boolean silent = true;
+        boolean silent = false;
         boolean pink = false;
+        boolean share = false;
+
+        // requesting 5 services with random chance of pink or share
         for (int i=0; i<=5; i++) {
             int rand = ApplicationLibrary.rand();
-            if (rand % 2 == 1) {
+            if (rand % 2 == 0 && i!=0) {
                 silent = false;
-                pink = true;
+                pink = false;
+                share = true;
             }
-            simulator.requestService(silent, pink);
+            else if ( i == 5) {
+                share = true;
+            }
+            simulator.requestService(silent, pink, share);
             // taxiCompany.provideService(user.getId());
         }
 
-        do {
-            simulator.show();
-            simulator.update();
-            System.out.println("made it");
-        }
-         while (taxiCompany.getTotalServices() != 0);
 
-        // Display statistics
-        System.out.println("Statistics:");
-        for (IVehicle vehicle : vehicles) {
-            String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
-            String stats = String.format("%s %2d driven by  %s, Silent: %b Pink: %b %2d services %3d km. %4d eur. %2d reviews %.2f stars",
-                    vehicleType,
-                    vehicle.getId(),
-                    vehicle.getDriver().getName(),
-                    vehicle.getSilent(),
-                    vehicle.getPink(),
-                    vehicle.getStatistics().getServices(),
-                    vehicle.getStatistics().getDistance(),
-                    vehicle.getStatistics().getBilling(),
-                    vehicle.getStatistics().getReviews(),
-                    vehicle.getStatistics().getStars());
-            System.out.println(stats);
-        }
+    //     do {
+    //         simulator.show();
+    //         simulator.update();
+    //     }
+    //      while (taxiCompany.getTotalServices() != 0);
+
+    //     // Display statistics
+    //     System.out.println("Statistics:");
+    //     for (IVehicle vehicle : vehicles) {
+    //         String vehicleType = (vehicle instanceof Taxi) ? "Taxi" : "Shuttle";
+    //         String stats = String.format("%s %2d driven by %s, Silent: %b Pink: %b, Share: %b, %2d services %3d km. %4d eur. %2d reviews %.2f stars",
+    //                 vehicleType,
+    //                 vehicle.getId(),
+    //                 vehicle.getDriver().getName(),
+    //                 vehicle.getSilent(),
+    //                 vehicle.getPink(),
+    //                 vehicle.getShare(),
+    //                 vehicle.getStatistics().getServices(),
+    //                 vehicle.getStatistics().getDistance(),
+    //                 vehicle.getStatistics().getBilling(),
+    //                 vehicle.getStatistics().getReviews(),
+    //                 vehicle.getStatistics().getStars());
+    //         System.out.println(stats);
+    //     }
     }
 }

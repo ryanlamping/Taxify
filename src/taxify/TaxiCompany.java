@@ -35,26 +35,54 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
     }
         
     @Override
-    public boolean provideService(int user, boolean silent, boolean pink) {
-        int userIndex = findUserIndex(user); 
-        // in here we would check if there is a vehicle in service close to the pick up location
-            // user.acceptRideShare() && passenger.acceptRideShare();
-            // if yes --> notify passenger of discount if ride share, notify user of potential shared ride
-            // if no --> continue to findFreeVehicle(pink)     
-        int vehicleIndex = findFreeVehicle(pink);
+    public boolean provideService(int requestUser, boolean silent, boolean pink, boolean share) {
+        // find user and create a variable type user
+        int userIndex = findUserIndex(requestUser);
+        IUser user = this.users.get(userIndex);
+
+        // set origin of user
+        ILocation origin = ApplicationLibrary.randomLocation();
+
+        // initiate vehicle indexes as -1 as no vehicle has been found
+        int vehicleIndex = -1;
+
+        if (share) {
+            System.out.println("User " + user.getId() + " chose ride share");
+            vehicleIndex = findVehicle(new FindClosestServiceVehicle(), origin);
+
+            if (vehicleIndex != -1) {
+                System.out.println("Vehicle " + vehicles.get(vehicleIndex).toString() + "found for ride share: ");
+            } else {
+                System.out.println("No vehicle for ride share found!");
+            }
+        }
+
+        else if (pink) {
+            System.out.println("User " + user.getId() + " chose a pink ride");
+            vehicleIndex = findVehicle(new FindClosestPinkVehicle(), origin);
+
+            if (vehicleIndex != -1) {
+                System.out.println("Vehicle " + vehicles.get(vehicleIndex).toString() + "found for pink ride: ");
+            } else {
+                System.out.println("No vehicle for pink ride found!");
+            }
+        }
+        else {
+            System.out.println("User " + user.getId() + " is looking for a ride");
+            vehicleIndex = findVehicle(new FindClosestFreeVehicle(), origin);
+
+            if (vehicleIndex != -1) {
+                System.out.println("Vehicle " + vehicles.get(vehicleIndex).toString() + "found for regular ride: ");
+            } else {
+                System.out.println("No vehicle for regular ride found!");
+            } 
+        }
         
         // if there is a free vehicle, assign a random pickup and drop-off location to the new service
-        // the distance between the pickup and the drop-off location should be at least 3 blocks
-        
+        System.out.println("vehicle index: " + vehicleIndex);
         if (vehicleIndex != -1) {
-            ILocation origin, destination;
-            
-            do {
-                
-                origin = ApplicationLibrary.randomLocation();
-                destination = ApplicationLibrary.randomLocation(origin);
-                
-            } while (ApplicationLibrary.distance(origin, this.vehicles.get(vehicleIndex).getLocation()) < ApplicationLibrary.MINIMUM_DISTANCE);
+            System.out.println("made it");            
+            ILocation destination = ApplicationLibrary.randomLocation(origin);
             
             // update the user status
                        
@@ -66,12 +94,11 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
             
             // assign the new service to the vehicle. no need to pass pink because only vehicles that would be available have female drivers
             
-            //this.vehicles.get(vehicleIndex).pickService(service, silent);            
+            // formality: make sure driver accepts ride (hard coded to true)
             this.vehicles.get(vehicleIndex).getDriver().acceptService(service);
-            this.vehicles.get(vehicleIndex).pickService(service, silent, pink); 
-            // else find a new vehicle
 
-                        
+            // call function to pick up user
+            this.vehicles.get(vehicleIndex).pickService(service, silent, pink); 
 
             notifyObserver("User " + this.users.get(userIndex).getId() + " requests a service from " + service.toString() + ", the ride is assigned to " +
                            this.vehicles.get(vehicleIndex).getClass().getSimpleName() + " " + this.vehicles.get(vehicleIndex).getId() + " at location " +
@@ -122,17 +149,9 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
     public void notifyObserver(String message) {
         this.observer.updateObserver(message);
     }
-    
-    private int findFreeVehicle(boolean pink) {
-        int index;
-        
-        do {
-            
-            index = ApplicationLibrary.rand(this.vehicles.size());
-            
-        } while (!this.vehicles.get(index).isFree(pink));
 
-        return index;
+    private int findVehicle(IFindVehicle find, ILocation origin) {
+        return find.getIndex(this.vehicles, origin);
     }
 
     private int findUserIndex(int id) {
@@ -143,13 +162,4 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         
         return -1;
     }
-
-    // private boolean acceptRideShare() {
-    //     if (ApplicationLibrary.rand() % 2 == 0) {
-    //         return true;
-    //     }
-    //     else {
-    //         return false;
-    //     }
-    // }
 }
