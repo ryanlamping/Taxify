@@ -211,7 +211,12 @@ public abstract class Vehicle implements IVehicle {
 
 	@Override
 	public int calculateCost() {
-		return this.service.calculateDistance();
+		if(this.service.getShare()) {
+			return this.service.calculateDistance()/2;
+		}
+		else {
+			return this.service.calculateDistance();
+		}
 	}
 
 	@Override

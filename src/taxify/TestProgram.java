@@ -82,8 +82,8 @@ public class TestProgram {
         for (int i=0; i<=10; i++) {
             int rand = ApplicationLibrary.rand();
             if (rand % 2 == 0 && i!=0) {
-                share = true;
                 silent = true;
+                share = true;
             }
             else if ( i == 5) {
                 share = true;

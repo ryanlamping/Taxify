@@ -81,7 +81,6 @@ public class TaxiCompany implements ITaxiCompany, ISubject {
         // if there is a free vehicle, assign a random pickup and drop-off location to the new service
         System.out.println("vehicle index: " + vehicleIndex);
         if (vehicleIndex != -1) {
-            System.out.println("made it");
             ILocation destination = ApplicationLibrary.randomLocation(origin);
             
             // update the user status
